@@ -357,10 +357,18 @@ class VHDLParser(XElement):
         self.print_debug(verbose, f'Converting the {filename} token list into an Element tree')
         file_element = self.token_list_to_element_tree(vf.lAllObjects)
 
+        self.print_debug(verbose, f'Pre-group_comment() token tree')
+        if verbose:
+            pp(file_element)
+
         # Modify the element tree to group comments and move them into their associated production elements
         self.print_debug(verbose, f'Processing comments in {filename}')
         self.group_comments(file_element, verbose=verbose)  # group line comments into blocks
-        # pp(file_element)
+
+        self.print_debug(verbose, f'Post group_comment() token tree')
+        if verbose:
+            pp(file_element)
+
         self.move_header_comments(file_element, verbose=verbose)  # move header comments into the immediately following production element
 
         # pp(file_element)
@@ -576,7 +584,7 @@ class VHDLParser(XElement):
             for port in ports:
                 self.add_label(f'entity[{entity_name}].port{port.names}', port.names, port)
             for gen in generics:
-                self.add_label(f'entity[{entity_name}].generic{port.names}', gen.names, port)
+                self.add_label(f'entity[{entity_name}].generic{gen.names}', gen.names, gen)
         return entities
 
     def replace(self, s, substrings, replacement_string):

@@ -222,7 +222,7 @@ class VHDLIncludeDirective(VHDLDirective):
         # parser = self.env.domaindata[VHDLDomain.name]['parser']
         lines = self.vhdl_parser.get_comments(self.entity, **self.search_params)
         if not lines:
-            raise RuntimeError(f'Did not find any comment matching the search criteria in {self.entity}')
+            raise RuntimeError(f'Did not find any comment matching the search criteria in {self.entity} with search parameters {self.search_params}')
         # print(f'** Inserting comment block for entity {self.entity}')
         # print('\n'.join(lines))
         # print('******* End of comment clock *****')
